@@ -307,6 +307,14 @@ RewriteRule [0-9/]+/[0-9]+\\.jpg$ - [F]
             if (!ImageManager::resize($file_org, $new_file_org, (int)$imageType['width'], (int)$imageType['height'])) {
                 $return = false;
             }
+
+            if(ImageManager::webpSupport()) {
+                $newFile = _PS_PROD_IMG_DIR_.$image->getExistingImgPath().'-'.stripslashes($imageType['name']).'.webp';
+                if (!ImageManagerCore::resize($file, $newFile, (int)$imageType['width'], (int)$imageType['height'], 'webp')) {
+                    $return = false;
+                }
+            }
+
         }
 
         return $return;
